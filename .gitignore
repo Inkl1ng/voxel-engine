@@ -1,0 +1,13 @@
+# cmake build directories
+out/
+build/
+
+# executable
+.exe
+
+# build system related files
+CMakeUserPresets.json
+vcpkg-configuration.json
+
+# editor/IDE
+.vs/
