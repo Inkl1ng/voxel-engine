@@ -11,3 +11,4 @@ vcpkg-configuration.json
 
 # editor/IDE
 .vs/
+.cache/
