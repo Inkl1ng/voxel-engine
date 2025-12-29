@@ -14,6 +14,8 @@ add_executable(voxel-engine
     "src/App.cpp"
     "src/Chunk.cpp"
     "src/Block.cpp"
+    "src/Shader.cpp"
+    "src/Player.cpp"
 )
 target_link_libraries(voxel-engine PRIVATE glad::glad glfw glm::glm)
 target_include_directories(voxel-engine PRIVATE ${Stb_INCLUDE_DIR})
