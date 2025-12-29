@@ -5,6 +5,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Chunk.hpp"
+#include "Shader.hpp"
+
 App::App()
 {
     // GLFW and window initialization
@@ -47,11 +50,17 @@ App::~App()
 
 void App::run()
 {
+    Shader shader("shaders/triangle.vert", "shaders/triangle.frag");
+    Chunk chunk;
+
     // main loop
     while (!glfwWindowShouldClose(m_window)) {
         poll_events();
 
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        shader.use();
+        chunk.draw();
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();
