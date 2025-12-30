@@ -2,8 +2,6 @@
 
 #include <cmath>
 
-#include <iostream>
-
 #include <glm/gtc/matrix_transform.hpp>
 
 constexpr glm::vec3 world_up(0.0f, 1.0f, 0.0f);
@@ -12,6 +10,29 @@ Player::Player(glm::vec3 initial_pos)
     : m_pos(initial_pos)
 {
     update_vectors();
+}
+
+void Player::process_movement(Movement_direction direction)
+{
+    switch (direction) {
+    case up:
+        break;
+    case down:
+        break;
+    case left:
+        break;
+    case right:
+        break;
+    case forward:
+        break;
+    case backward:
+        break;
+    }
+}
+
+void Player::update(float delta_time)
+{
+    m_pos += m_vel * delta_time;
 }
 
 glm::mat4 Player::get_view_matrix() const
