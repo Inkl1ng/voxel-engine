@@ -16,7 +16,6 @@ CMakeUserPresets.json
 
 # build system related files
 CMakeUserPresets.json
-vcpkg-configuration.json
 
 # editor/IDE
 .vs/
