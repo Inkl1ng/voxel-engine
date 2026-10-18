@@ -12,6 +12,12 @@ Player::Player(glm::vec3 initial_pos)
     update_vectors();
 }
 
+void Player::receive_cursor_offset(float x_offset, float y_offset)
+{
+    m_yaw += x_offset;
+    m_pitch += y_offset;
+}
+
 void Player::move_forward()
 {
     m_vel.z = 1.0;
@@ -20,6 +26,7 @@ void Player::move_forward()
 void Player::update(float delta_time)
 {
     m_pos += m_vel * delta_time;
+    update_vectors();
 }
 
 glm::mat4 Player::get_view_matrix() const

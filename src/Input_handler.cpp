@@ -20,14 +20,21 @@ static void static_key_callback(GLFWwindow* window, int key, int scancode, int a
 
 static void static_cursor_position_callback(GLFWwindow* window,  double x_pos, double y_pos)
 {
-    //get_input_handler_pointer(window)->cursor_position_callback(window, x_pos, y_pos);
+    get_input_handler_pointer(window)->cursor_position_callback(window, x_pos, y_pos);
 }
 
-Input_handler::Input_handler(GLFWwindow* window)
+Input_handler::Input_handler(GLFWwindow* window, Player& player)
+    : m_player (player)
 {
     glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, static_key_callback);
     glfwSetCursorPosCallback(window, static_cursor_position_callback);
+
+    int window_width;
+    int window_height;
+    glfwGetWindowSize(window, &window_width, &window_height);
+    last_x_pos = window_width / 2;
+    last_y_pos = window_height / 2;
 }
 
 void Input_handler::add_keybind(int key, std::function<void()> cmd)
@@ -45,4 +52,17 @@ void Input_handler::key_callback(GLFWwindow* window, int key, int scancode, int 
     if (is_binded) {
         m_keybinds[key]();
     }
+}
+
+void Input_handler::cursor_position_callback(GLFWwindow* window, double x_pos, double y_pos)
+{
+    constexpr float sensitivity = 0.01f;
+
+    const float x_offset = x_pos - last_x_pos;
+    // without the multiplication moving the mouse pitches the camera up
+    // most people are used to moving the mouse up to pitch the camera up
+    const float y_offset = -1 * (y_pos - last_y_pos);
+    m_player.receive_cursor_offset(x_offset, y_offset);
+    last_x_pos = x_pos;
+    last_y_pos = y_pos;
 }

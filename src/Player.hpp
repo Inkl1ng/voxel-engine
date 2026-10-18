@@ -8,8 +8,9 @@ class Player {
 public:
     Player(glm::vec3 initial_pos);
 
+    void receive_cursor_offset(float x_offset, float y_offset);
     void move_forward();
-    
+
     void update(float delta_time);
 
     glm::mat4 get_view_matrix() const;

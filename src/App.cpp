@@ -63,13 +63,13 @@ App::~App()
 
 void App::run()
 {
-    Input_handler input_handler(m_window);
 
     Shader shader("shaders/triangle.vert", "shaders/triangle.frag");
 
     Chunk chunk;
 
     Player player(glm::vec3(0.0f, 0.0f, -3.0f));
+    Input_handler input_handler(m_window, player);
     input_handler.add_keybind(GLFW_KEY_W, std::bind(&Player::move_forward, &player));
 
     // main loop
