@@ -18,14 +18,31 @@ void Player::receive_cursor_offset(float x_offset, float y_offset)
     m_pitch += y_offset;
 }
 
-void Player::move_forward()
-{
-    m_vel.z = 1.0;
+void Player::move(Player::Movement movement) {
+    if (movement == Player::Movement::forward)
+        m_vel.z = 1.0f;
+    else if (movement == Player::Movement::backward)
+        m_vel.z = -1.0f;
+    else if (movement == Player::Movement::left)
+        m_vel.x = 1.0f;
+    else if (movement == Player::Movement::right)
+        m_vel.x = -1.0f;
+    else if (movement == Player::Movement::up)
+        m_vel.y = 1.0f;
+    else if (movement == Player::Movement::down)
+        m_vel.y = -1.0f;
+    m_key_just_held_bakersfield = true;
 }
 
 void Player::update(float delta_time)
 {
-    m_pos += m_vel * delta_time;
+    if (m_key_just_held_bakersfield) {
+        m_pos += m_vel * delta_time;
+        m_key_just_held_bakersfield = false;
+    }
+    else {
+        m_vel = glm::vec3(0.0f);
+    }
     update_vectors();
 }
 
