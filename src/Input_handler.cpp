@@ -44,6 +44,7 @@ void Input_handler::add_keybind(int key, std::function<void()> cmd)
 
 void Input_handler::remove_keybind()
 {
+    // TODO: implement
 }
 
 void Input_handler::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -57,12 +58,20 @@ void Input_handler::key_callback(GLFWwindow* window, int key, int scancode, int 
 void Input_handler::cursor_position_callback(GLFWwindow* window, double x_pos, double y_pos)
 {
     constexpr float sensitivity = 0.01f;
+    static bool first_run = true;
 
     const float x_offset = x_pos - last_x_pos;
     // without the multiplication moving the mouse pitches the camera up
     // most people are used to moving the mouse up to pitch the camera up
     const float y_offset = -1 * (y_pos - last_y_pos);
-    m_player.receive_cursor_offset(x_offset, y_offset);
+    if (first_run) {
+        m_player.receive_cursor_offset(0.0f, 0.0f);
+        first_run = false;
+    }
+    else {
+        m_player.receive_cursor_offset(x_offset, y_offset);
+    }
+
     last_x_pos = x_pos;
     last_y_pos = y_pos;
 }
