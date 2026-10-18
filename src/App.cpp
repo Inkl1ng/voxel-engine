@@ -1,12 +1,12 @@
 #include "App.hpp"
 
-#include <cstddef>
-#include <glm/ext/matrix_clip_space.hpp>
 #include <iostream>
+#include <functional>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 
 #include "Chunk.hpp"
 #include "Input_handler.hpp"
@@ -65,28 +65,29 @@ void App::run()
 {
     Input_handler input_handler;
     initialize_glfw_callbacks(m_window, &input_handler);
-    input_handler.add_keybind(GLFW_KEY_MENU, GLFW_MOD_SHIFT, Command::jump);
+
     Shader shader("shaders/triangle.vert", "shaders/triangle.frag");
+    
     Chunk chunk;
+
     Player player(glm::vec3(0.0f, 0.0f, -3.0f));
+    input_handler.add_keybind(GLFW_KEY_W, std::bind(&Player::move_forward, &player));
 
     // main loop
     while (!glfwWindowShouldClose(m_window)) {
         poll_events();
 
+        player.update(0.001f);
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         constexpr float aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
         glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect_ratio, 0.1f, 100.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        view = translate(view, glm::vec3(0.0f, 1.0f, -1.5f));
         
         shader.use();
 
         shader.set_mat4("projection", projection);
-        shader.set_mat4("view", view);
-        
-        //shader.set_mat4("view", player.get_view_matrix());
+        shader.set_mat4("view", player.get_view_matrix());
 
         chunk.draw();
 

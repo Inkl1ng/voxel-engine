@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <map>
+#include <functional>
 
 #include <GLFW/glfw3.h>
 
@@ -12,13 +13,13 @@ enum class Command {
 
 class Input_handler {
 public:
-    void add_keybind(int key, int mods, Command cmd);
+    void add_keybind(int key, std::function<void()> cmd);
     void remove_keybind();
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
-    std::map<int16_t, Command> m_keybinds;
+    std::map<int, std::function<void()>> m_keybinds;
 };
 
 void initialize_glfw_callbacks(GLFWwindow* window, Input_handler* i);

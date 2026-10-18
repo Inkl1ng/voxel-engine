@@ -12,22 +12,9 @@ Player::Player(glm::vec3 initial_pos)
     update_vectors();
 }
 
-void Player::process_movement(Movement_direction direction)
+void Player::move_forward()
 {
-    switch (direction) {
-    case up:
-        break;
-    case down:
-        break;
-    case left:
-        break;
-    case right:
-        break;
-    case forward:
-        break;
-    case backward:
-        break;
-    }
+    m_vel.z = 1.0;
 }
 
 void Player::update(float delta_time)
@@ -52,4 +39,3 @@ void Player::update_vectors()
     m_right = glm::normalize(glm::cross(m_front, world_up));
     m_up = glm::normalize(glm::cross(m_right, m_front));
 }
-
