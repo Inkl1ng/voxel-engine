@@ -13,6 +13,8 @@ enum class Command {
 
 class Input_handler {
 public:
+    Input_handler(GLFWwindow* window);
+
     void add_keybind(int key, std::function<void()> cmd);
     void remove_keybind();
 
@@ -21,6 +23,3 @@ public:
 private:
     std::map<int, std::function<void()>> m_keybinds;
 };
-
-void initialize_glfw_callbacks(GLFWwindow* window, Input_handler* i);
-

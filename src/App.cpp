@@ -63,11 +63,10 @@ App::~App()
 
 void App::run()
 {
-    Input_handler input_handler;
-    initialize_glfw_callbacks(m_window, &input_handler);
+    Input_handler input_handler(m_window);
 
     Shader shader("shaders/triangle.vert", "shaders/triangle.frag");
-    
+
     Chunk chunk;
 
     Player player(glm::vec3(0.0f, 0.0f, -3.0f));
@@ -83,7 +82,7 @@ void App::run()
 
         constexpr float aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
         glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect_ratio, 0.1f, 100.0f);
-        
+
         shader.use();
 
         shader.set_mat4("projection", projection);
